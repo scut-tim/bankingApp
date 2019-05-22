@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank</title>
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bank.css">
+    <style type="text/css">
+        .hide {
+            display: none;
+        }
+
+        #header-slider ul li.on {
+            border-bottom: 2px solid #efc100;
+            /*background-color: #efc100;
+            border-radius: 5px;*/
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var myslider = document.getElementById("bank-body");
+
+            var myheadslider = document.getElementById("header-slider");
+
+            var myUI = myheadslider.getElementsByTagName("ul")[0];
+
+            var myLi = myUI.getElementsByTagName("li");//数组
+            var myDiv = myslider.getElementsByTagName("div");
+
+            for (var i = 0; i < myLi.length; i++) {
+                myLi[i].index = i;
+                myLi[i].onclick = function () {
+                    for (var j = 0; j < myDiv.length; j++) {
+                        myDiv[j].className = "hide";
+                    }
+
+                    for (var j = 0; j < myLi.length; j++) {
+                        myLi[j].className = "off";
+
+
+                    }
+                    this.className = "on";
+                    myDiv[0].className = "show";
+                    myDiv[this.index + 1].className = "show";
+
+                }
+            }
+        }
+
+    </script>
+    <script type="text/javascript">
+        function check() {
+
+            var a = document.getElementById("queryUser");
+
+            $.ajax(
+                {
+                    url: "queryBalance",
+                    type: "GET",
+                    dataType: "json",
+                    data: {"username": a.value},
+                    success: function (arg) {
+
+                       $("#money").html(arg.balance);
+
+                    }
+                }
+            )
+
+        }
+
+        function showbalance(arg) {
+            window.alert(arg.balance);
+        }
+    </script>
+
+    <script>
+        function add() {
+
+            var user = document.getElementById("saveUser");
+            var amount = document.getElementById("amount");
+            $.ajax(
+                {
+
+                    url: "userDeposit",
+                    type: "POST",
+                    data: {"username": user.value, "amount": amount.value},
+                    success: function (arg) {
+
+
+                        window.alert("打钱成功")
+                    }
+                }
+            )
+
+
+        }
+
+
+    </script>
+    <script>
+        function deposit() {
+            // window.alert("hehe");
+            var deposituser = document.getElementById("depositUser");
+            var amount1 = document.getElementById("amount1");
+            $.ajax({
+
+                url: "userDeposit",
+                type: "POST",
+
+                data: {"username": deposituser.value, "amount": -amount1.value},
+                success: function (arg) {
+                    window.alert("取钱成功！")
+                }
+            })
+        }
+
+
+    </script>
+
+    <script>
+        function transfer() {
+
+            var transferUser = document.getElementById("transferuser");
+            var transferuserTo = document.getElementById("transferTo");
+            var amount2 = document.getElementById("amount2");
+
+            $.ajax({
+
+                url: "userTransfer",
+                type: "POST",
+
+                data: {"username1": transferUser.value, "username2": transferuserTo.value, "amount": amount2.value},
+                success: function (arg) {
+                    window.alert("转账成功")
+                }
+
+
+            })
+
+        }
+    </script>
+</head>
+<body>
+<!-- 	**********************bank-header************** -->
+<div class="bank-header">
+    <div class="bank-header-title">
+        <h1>BankingApplication</h1>
+    </div>
+
+</div>
+<!-- *******************bank-body*********************** -->
+<div id="bank-body">
+    <div id="header-slider">
+        <ul>
+            <li class="off">
+                查询余额
+            </li>
+            <li class="on">
+                存 钱
+            </li>
+            <li class="off">
+                取 钱
+            </li>
+            <li class="off">
+                转 账
+            </li>
+        </ul>
+    </div>
+
+    <!-- ****************************查询余额********************** -->
+    <div id="check-balance" class="hide">
+<span class="username">
+用户名：<input type="text" placeholder='请输入您的姓名' value="" bindblur='userNameInput' id="queryUser">
+    <!-- <input type="submit" name="submit" value="添加"> -->
+</span>
+        <span class="button-check">
+	<button class="btn_check" onclick="check()">查询</button>
+</span>
+        <span class="sum">
+金额：<span id="money"></span>
+</span>
+
+    </div>
+
+
+    <!-- *********************存钱******************** -->
+    <div id="user_balance" class="show">
+	<span class="username">
+	用户名：<input type="text" name="username" id="saveUser">
+        <!-- <input type="submit" name="submit" value="添加"> -->
+</span>
+        <span class="balance">
+	金额：<input type="text" name="balance" id="amount">
+</span>
+        <span class="button-add">
+	<button class="add" onclick="add()">存钱</button>
+</span>
+    </div>
+
+    <!-- **************************取钱*********************** -->
+    <div id="deposit" class="hide">
+<span class="username">
+用户名：<input type="text" name="username" id="depositUser">
+    <!-- <input type="submit" name="submit" value="添加"> -->
+</span>
+        <span class="num">
+	金额：<input type="text" name="num" id="amount1">
+</span>
+        <span class="button-deposit">
+	<button class="btn_deposit" onclick="deposit()">取钱</button>
+</span>
+    </div>
+    <!-- *****************************转账********************* -->
+    <div id="transfer" class="hide">
+<span class="username1">
+用户名：<input type="text" name="username" id="transferuser">
+    <!-- <input type="submit" name="submit" value="添加"> -->
+</span>
+        <span class="username2">
+用户名：<input type="text" name="username" id="transferTo">
+            <!-- <input type="submit" name="submit" value="添加"> -->
+</span>
+
+        <span class="amount">
+	金额：<input type="text" name="amount" id="amount2">
+</span>
+        <span class="button-transfer">
+	<button class="btn_transfer" onclick="transfer()">转账</button>
+</span>
+    </div>
+</div>
+<div class="ending">
+    <p class="name">
+        <a href="#" class="about">关于我们</a>
+        <a href="#">林俊涛</a>
+        <a href="#">戴兆添</a>
+        <a href="#">李兆坤</a>
+        <a href="#">林添</a>
+        <a href="#">林勇儒</a>
+    </p>
+</div>
+</body>
+</html>
