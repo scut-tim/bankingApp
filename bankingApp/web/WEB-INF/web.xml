@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+    <servlet>
+        <servlet-name>ServletQueryBalance</servlet-name>
+        <servlet-class>servlet.ServletQueryBalance</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletQueryBalance</servlet-name>
+        <url-pattern>/queryBalance</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletUserDeposit</servlet-name>
+        <servlet-class>servlet.ServletUserDeposit</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletUserDeposit</servlet-name>
+        <url-pattern>/userDeposit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletUserTransfer</servlet-name>
+        <servlet-class>servlet.ServletUserTransfer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletUserTransfer</servlet-name>
+        <url-pattern>/userTransfer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletUserRegister</servlet-name>
+        <servlet-class>servlet.ServletUserRegister</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletUserRegister</servlet-name>
+        <url-pattern>/userRegister</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ServletGetSecurity</servlet-name>
+        <servlet-class>servlet.ServletGetSecurity</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletGetSecurity</servlet-name>
+        <url-pattern>/getSecurity</url-pattern>
+    </servlet-mapping>
+
+
+
+
+</web-app>
